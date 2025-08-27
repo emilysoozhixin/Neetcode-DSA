@@ -11,29 +11,60 @@ class Pair:
 
 class Solution:
     def mergeSort(self, pairs: List[Pair]) -> List[List[Pair]]:
+        return self.mergeSortHelper(pairs, 0, len(pairs) - 1)
+    
+    def mergeSortHelper(self, pairs: List[Pair], s: int, e: int) -> List[List[Pair]]:
         
-        states = []
+        # Base case
+        if e - s + 1 <= 1:
+            return pairs
+        
+        mid = (s + e) // 2
+        
+        self.mergeSortHelper(pairs, s, mid)
+        self.mergeSortHelper(pairs, mid + 1, e)
 
-        for i in range(len(pairs)):
-            j = i - 1
-            while j >= 0 and pairs[i].key < pairs[j].key:
-                temp = pairs[j+1]
-                pairs[j+1] = pairs[j]
-                pairs[j] = temp
-                j -= 1
+        self.merge(pairs, s, mid, e)
 
-            states.append(pairs[:])
-            print(f"After pass {i}: {pairs}") 
+        return pairs
+    
+    def merge(self, arr: List[Pair], s: int, mid: int, e: int) -> None:
 
-        return states
+        left = arr[s : mid + 1]
+        right = arr[mid + 1 : e + 1]
+
+        i = 0  # Pointer for left
+        j = 0  # Pointer for right
+        k = s  # Pointer for main array
+
+        while i < len(left) and j < len(right):
+            if left[i].key <= right[j].key:
+                arr[k] = left[i]
+                i += 1
+            else:
+                arr[k] = right[j]
+                j += 1
+            k += 1
+        
+        # Copy any remaining elements from left or right
+        while i < len(left):
+            arr[k] = left[i]
+            i += 1
+            k += 1
+
+        while j < len(right):
+            arr[k] = right[j]
+            j += 1
+            k += 1
+
+        
+
 
 # Input:
-pairs = [Pair(5, "apple"), Pair(2, "banana"), Pair(9, "cherry")]
+pairs = [Pair(5, "apple"), Pair(2, "banana"), Pair(9, "cherry"), Pair(1, "date"), Pair(9, "elderberry")]
 solution = Solution()
-print(solution.insertionSort(pairs)) 
+print(solution.mergeSort(pairs)) 
 
 # Output:
-# [[(5, "apple"), (2, "banana"), (9, "cherry")], 
-#  [(2, "banana"), (5, "apple"), (9, "cherry")], 
-#  [(2, "banana"), (5, "apple"), (9, "cherry")]]
+# [(1, "date"), (2, "banana"), (5, "apple"), (9, "cherry"), (9, "elderberry")]
 
