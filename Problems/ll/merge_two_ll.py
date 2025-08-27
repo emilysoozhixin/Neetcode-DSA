@@ -20,7 +20,7 @@ def mergeTwoLists(list1: Optional[ListNode], list2: Optional[ListNode]) -> Optio
     print(f"List1:", end="")
     print_linked_list(list1)
     print("List2 head:", list2.val if list2 else None)
-    print(list2)
+    # print(list2)
 
     if list1 is None:
         return list2
