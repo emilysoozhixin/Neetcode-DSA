@@ -17,7 +17,6 @@ def bfs(root):
         print("level: ", level)
         for i in range(len(queue)):
             curr = queue.popleft()
-            print(curr.val)
             if curr.left:
                 queue.append(curr.left)
             if curr.right:

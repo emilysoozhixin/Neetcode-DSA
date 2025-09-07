@@ -26,6 +26,10 @@ class Solution:
 
         # pre = [1,2,3,4]
         # in = [2,1,3,4]
+        # left
+        # pre[1:mid+1], in[:mid]
+        # right
+        # pre[mid+1:], in[mid+1:]
 
         # Debug with indentation for readability
         indent = "  " * depth
